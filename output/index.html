@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>VueJS Component AQI AJAX</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+  <link rel="stylesheet" href="assets/css/all.css">
+</head>
+<body>
+
+  <div id="app" class="container-fluid" style="min-height: 100vh">
+    <loading-component v-if="isLoading"></loading-component>
+    <div class="row">
+      <div class="container">
+        <div class="d-flex flex-wrap">
+          <div class="col-12">
+            <select class="form-control my-3 mx-auto" style="max-width: 350px;" v-model='selectCounty'>
+              <option value="" disabled>--- 請選擇市區 ---</option>
+              <option value="全部市區">全部市區</option>
+              <option :value="item" v-for="item in filterCounty">{{ item }}</option>
+            </select>
+            <p class="text-center">
+              <span class="d-inline-block">全部筆數：{{ AJAX_data.length }} 筆 | </span>
+              <span class="d-inline-block" v-if="selectCounty != '' ">所選市區：{{ selectCounty }} | </span class="d-inline-block">
+              <span class="d-inline-block" v-if="stared.length > 0">已加關注鄉鎮市區：{{ stared.length }} 筆 | </span>
+              <span class="d-inline-block" v-if="cardsData.length > 0">鄉鎮市區列表：{{ cardsData.length }} 筆</span>
+            </p>
+            <hr>
+          </div>
+        </div>
+        <template v-if="staredData.length > 0">
+          <div class="d-flex flex-wrap">
+            <div class="col-12">
+              <h3>關注鄉鎮市區</h3>
+            </div>
+            <card-component 
+              v-for="(item, index) in staredData" 
+              :cord-prpos="item" 
+              :star-status="true"
+              :key="item.SiteName"
+              @card-emit="cardStarClick(item)"
+            ></card-component>
+          </div>
+          <hr>
+        </template>
+        <div class="d-flex flex-wrap">
+          <div class="col-12">
+            <h3>鄉鎮市區列表</h3>
+          </div>
+          <card-component 
+            v-for="(item, index) in cardsData" 
+            :cord-prpos="item"
+            :star-status="false"
+            :key="item.SiteName"
+            @card-emit="cardStarClick(item)"
+          ></card-component>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+    
+  </div>
+  <!-- / #app -->
+
+  <!-- x-template -->
+  <script type="text/x-template" id="loadingComponentTemplate">
+    <div class="c-loading d-flex align-items-center justify-content-center">
+      <div class="c-loading__container">
+        <img class="c-loading__container__img d-inline-block infinite bounce animated animated-duration--2" src="assets/img/icon--AQI.png">
+        <span class="c-loading__container__string d-block">loading ...</span>
+      </div>
+    </div>
+  </script>
+  <script type="text/x-template" id="CardsTemplate">
+    <div class="col-md-6 col-lg-4 my-2">
+      <div class="card" :class="statusClass"> 
+        <div class="card-header">
+          {{cordPrpos.County}} - {{ cordPrpos.SiteName }}
+          <a href="#" class="float-right" 
+            @click.prevent="tempStarClick"
+          >
+            <i class="fa-star" :class="starClass"></i>
+          </a>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mb-0">
+            <small>
+              <li>AQI 指數: {{ cordPrpos.AQI }}</li>
+              <li>PM 2.5: {{ cordPrpos['PM2.5_AVG'] }}</li>
+              <li>說明: {{ cordPrpos.Status }}</li>
+              <li>更新時間: {{ cordPrpos.PublishTime }}</li>
+            </small>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </script>
+  <!-- /x-template -->
+
+  <!-- js_lib -->
+  <!-- <script src="assets/js/lib/jquery.min.js"></script> -->
+  <!-- <script src="assets/js/lib/vue.js"></script> -->
+  <script src="assets/js/vendors.js"></script>
+  <!-- /js_lib -->
+  
+  <script src="assets/js/all.js"></script>
+
+</body>
+</html>

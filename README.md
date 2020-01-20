@@ -1,6 +1,6 @@
 # aio-vue-component
 
-[展示頁面](https://gmwu185.github.io/aio-vue-component/)
+[展示頁面](https://gmwu185.github.io/aio_vue_component/index.html)
 
 ## 套件與版本說明
 - gulp 4 自動化執行前端檔案編譯與產出
