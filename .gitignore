@@ -1,0 +1,15 @@
+# systen & Tools
+.DS_Store
+*/.DS_Store
+.vscode
+
+# 前端模組
+package-lock.json
+node_modules
+bower_components/
+.tmp/
+build/
+.publish
+
+# 參考資料夾
+inbox

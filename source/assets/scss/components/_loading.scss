@@ -1,0 +1,23 @@
+.c-loading {
+  background-color: #63ab97;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 9999;
+  text-align: center;
+
+  &__container{
+    &__img {
+      height: 140px;
+      width: 140px;
+    }
+    &__string{
+      color: white;
+      font-size: 1.5rem;
+    }
+  }
+}
